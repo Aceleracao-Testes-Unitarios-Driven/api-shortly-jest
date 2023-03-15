@@ -1,14 +1,10 @@
 import { Request, Response } from "express";
-import {
-  createUserService,
-  getByIdUserService,
-  getRankingByUserService,
-} from "../services/users.services";
+import userService from "../services/usersServices";
 
 export async function createUser(req: Request, res: Response) {
   const { name, email, password } = req.body;
   try {
-    await createUserService({ name, email, password });
+    await userService.createUserService({ name, email, password });
     res.sendStatus(201);
   } catch (error: any) {
     return res.status(500).send(error.message);
@@ -18,7 +14,7 @@ export async function createUser(req: Request, res: Response) {
 export async function getUserById(req: Request, res: Response) {
   const { user } = res.locals;
   try {
-    const result = await getByIdUserService(user);
+    const result = await userService.getByIdUserService(user);
     res.send(result);
   } catch (error: any) {
     return res.status(500).send(error.message);
@@ -27,7 +23,7 @@ export async function getUserById(req: Request, res: Response) {
 
 export async function getRanking(req: Request, res: Response) {
   try {
-    const rows = await getRankingByUserService();
+    const rows = await userService.getRankingByUserService();
     res.send(rows);
   } catch (error: any) {
     console.log(error);

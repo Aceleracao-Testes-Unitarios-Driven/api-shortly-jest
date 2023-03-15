@@ -1,6 +1,6 @@
 import { db } from "../database/db";
 
-export async function getUserByEmailRepository(email: string) {
+async function getUserByEmailRepository(email: string) {
   const { rows: users } = await db.query(
     `SELECT * FROM users WHERE email = $1 `,
     [email]
@@ -9,7 +9,7 @@ export async function getUserByEmailRepository(email: string) {
   return users;
 }
 
-export async function createUserRepository(
+async function createUserRepository(
   name: string,
   email: string,
   passwordHash: string
@@ -22,7 +22,7 @@ export async function createUserRepository(
   );
 }
 
-export async function getViewsUrlByUserIdRepository(id: string) {
+async function getViewsUrlByUserIdRepository(id: string) {
   return await db.query(
     `SELECT SUM(s."views") 
       FROM shortens s 
@@ -31,11 +31,11 @@ export async function getViewsUrlByUserIdRepository(id: string) {
   );
 }
 
-export async function getUrlsByUserIdRepository(id: string) {
+async function getUrlsByUserIdRepository(id: string) {
   return await db.query(`SELECT * FROM shortens s WHERE s."userId" = $1`, [id]);
 }
 
-export async function getRankingByUserRepository() {
+async function getRankingByUserRepository() {
   return await db.query(`
     SELECT 
       u.id, 
@@ -49,3 +49,11 @@ export async function getRankingByUserRepository() {
     LIMIT 10
   `);
 }
+
+export default {
+  getUserByEmailRepository,
+  createUserRepository,
+  getViewsUrlByUserIdRepository,
+  getUrlsByUserIdRepository,
+  getRankingByUserRepository,
+};

@@ -1,10 +1,6 @@
 import { db } from "../database/db";
 
-export async function shortenUrlRepository(
-  url: string,
-  shortUrl: string,
-  id: string
-) {
+async function shortenUrlRepository(url: string, shortUrl: string, id: string) {
   return await db.query(
     `
           INSERT INTO shortens(url, "shortUrl", "userId")
@@ -14,11 +10,11 @@ export async function shortenUrlRepository(
   );
 }
 
-export async function getUrlByIdRepository(id: string) {
+async function getUrlByIdRepository(id: string) {
   return await db.query(`SELECT * FROM shortens WHERE id = $1`, [id]);
 }
 
-export async function getShotenByShortUrlRepository(shortUrl: string) {
+async function getShotenByShortUrlRepository(shortUrl: string) {
   return await db.query(
     `
       SELECT * 
@@ -28,7 +24,7 @@ export async function getShotenByShortUrlRepository(shortUrl: string) {
   );
 }
 
-export async function openShortUrlByIdRepository(id: string) {
+async function openShortUrlByIdRepository(id: string) {
   return await db.query(
     `
           UPDATE shortens
@@ -38,6 +34,14 @@ export async function openShortUrlByIdRepository(id: string) {
   );
 }
 
-export async function deleteUrlRepository(id: string) {
+async function deleteUrlRepository(id: string) {
   await db.query("DELETE FROM shortens WHERE id=$1", [id]);
 }
+
+export default {
+  shortenUrlRepository,
+  getUrlByIdRepository,
+  getShotenByShortUrlRepository,
+  openShortUrlByIdRepository,
+  deleteUrlRepository,
+};
