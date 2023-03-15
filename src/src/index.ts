@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
-import routes from "./src/routes/index.routes";
+import routes from "./routes/index.routes";
 
 const app = express();
 app.use(express.json());
