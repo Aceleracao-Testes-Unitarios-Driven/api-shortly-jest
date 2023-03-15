@@ -4,14 +4,18 @@ import {
   getUrlByIdRepository,
   openShortUrlByIdRepository,
   shortenUrlRepository,
-} from "../repositories/urls.repository.js";
+} from "../repositories/urls.repository";
 
-export async function shortenUrlService(url, shortUrl, id) {
+export async function shortenUrlService(
+  url: string,
+  shortUrl: string,
+  id: string
+) {
   const result = await shortenUrlRepository(url, shortUrl, id);
   if (result.rowCount < 0) throw new Error("Error shortening url ");
 }
 
-export async function getUrlByIdService(id) {
+export async function getUrlByIdService(id: string) {
   const result = await getUrlByIdRepository(id);
 
   if (result.rowCount === 0) throw new Error("Url not found");
@@ -25,7 +29,7 @@ export async function getUrlByIdService(id) {
   return url;
 }
 
-export async function openShortUrlService(shortUrl) {
+export async function openShortUrlService(shortUrl: string) {
   const result = await getShotenByShortUrlRepository(shortUrl);
   if (result.rowCount === 0) throw new Error("Url not found");
   const [url] = result.rows;
@@ -33,7 +37,14 @@ export async function openShortUrlService(shortUrl) {
   return url;
 }
 
-export async function deleteUrlService(id, user) {
+interface IUser {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+}
+
+export async function deleteUrlService(id: string, user: IUser) {
   const result = await getUrlByIdRepository(id);
   if (result.rowCount === 0) throw new Error("Url not found");
   const [url] = result.rows;

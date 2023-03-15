@@ -1,6 +1,6 @@
-import { db } from "../database/db.js";
+import { db } from "../database/db";
 
-export async function getUserByEmailRepository(email) {
+export async function getUserByEmailRepository(email: string) {
   const { rows: users } = await db.query(
     `SELECT * FROM users WHERE email = $1 `,
     [email]
@@ -9,7 +9,11 @@ export async function getUserByEmailRepository(email) {
   return users;
 }
 
-export async function createUserRepository(name, email, passwordHash) {
+export async function createUserRepository(
+  name: string,
+  email: string,
+  passwordHash: string
+) {
   await db.query(
     `
       INSERT INTO users (name, email, password) 
@@ -18,7 +22,7 @@ export async function createUserRepository(name, email, passwordHash) {
   );
 }
 
-export async function getViewsUrlByUserIdRepository(id) {
+export async function getViewsUrlByUserIdRepository(id: string) {
   return await db.query(
     `SELECT SUM(s."views") 
       FROM shortens s 
@@ -27,11 +31,11 @@ export async function getViewsUrlByUserIdRepository(id) {
   );
 }
 
-export async function getUrlsByUserIdRepository(id) {
+export async function getUrlsByUserIdRepository(id: string) {
   return await db.query(`SELECT * FROM shortens s WHERE s."userId" = $1`, [id]);
 }
 
-export async function getRankingByUserRepository(){
+export async function getRankingByUserRepository() {
   return await db.query(`
     SELECT 
       u.id, 

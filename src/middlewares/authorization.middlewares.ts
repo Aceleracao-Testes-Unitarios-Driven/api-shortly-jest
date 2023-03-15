@@ -1,6 +1,11 @@
-import {db} from "../database/db.js";
+import { NextFunction, Request, Response } from "express";
+import { db } from "../database/db";
 
-export async function authValidation(req, res, next) {
+export async function authValidation(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   const authorization = req.headers.authorization;
   const token = authorization?.replace("Bearer ", "");
 

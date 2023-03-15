@@ -1,9 +1,14 @@
 import bcrypt from "bcrypt";
 import { v4 as uuid } from "uuid";
-import { createNewSessionRepository } from "../repositories/auth.repository.js";
-import { getUserByEmailRepository } from "../repositories/users.repository.js";
+import { createNewSessionRepository } from "../repositories/auth.repository";
+import { getUserByEmailRepository } from "../repositories/users.repository";
 
-export async function signinService({ email, password }) {
+interface ISign {
+  email: string;
+  password: string;
+}
+
+export async function signinService({ email, password }: ISign) {
   const users = await getUserByEmailRepository(email);
   const [user] = users;
   if (!user) {

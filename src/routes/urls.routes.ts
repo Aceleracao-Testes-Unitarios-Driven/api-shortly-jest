@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { authValidation } from "../middlewares/authorization.middlewares.js";
+import { authValidation } from "../middlewares/authorization.middlewares";
 import {
   shortenUrl,
   getUrlById,
   deleteUrl,
   openShortUrl,
-} from "../controllers/urls.controller.js";
-import urlSchema from "../models/urlSchema.js";
-import { validateSchema } from "../middlewares/schemaValidator.js";
+} from "../controllers/urls.controller";
+import urlSchema from "../models/urlSchema";
+import { validateSchema } from "../middlewares/schemaValidator";
 
 const router = Router();
 
