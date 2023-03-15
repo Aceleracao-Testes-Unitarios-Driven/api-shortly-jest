@@ -1,1 +1,1 @@
-# api-shortly-jest
+# api-shortly
