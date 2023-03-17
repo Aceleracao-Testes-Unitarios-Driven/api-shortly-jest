@@ -14,11 +14,11 @@ async function createUserService({ name, email, password }: IUser) {
   if (existingUsers.length > 0) throw new Error("User already exist");
 
   const passwordHash = bcrypt.hashSync(password, 10);
-  
+
   await usersRepository.createUserRepository(name, email, passwordHash);
-  
+
   const user = await usersRepository.getUserByEmailRepository(email);
-  
+
   return user;
 }
 
@@ -43,8 +43,14 @@ async function getRankingByUserService() {
   return rows;
 }
 
+async function getAllUsersService() {
+  const result = await usersRepository.getAllUsersRepository();
+  return result;
+}
+
 export default {
   createUserService,
   getByIdUserService,
   getRankingByUserService,
+  getAllUsersService,
 };

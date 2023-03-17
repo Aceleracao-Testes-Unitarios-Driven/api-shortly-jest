@@ -50,10 +50,15 @@ async function getRankingByUserRepository() {
   `);
 }
 
+async function getAllUsersRepository() {
+  return await db.query(`SELECT * FROM users`);
+}
+
 export default {
   getUserByEmailRepository,
   createUserRepository,
   getViewsUrlByUserIdRepository,
   getUrlsByUserIdRepository,
   getRankingByUserRepository,
+  getAllUsersRepository,
 };

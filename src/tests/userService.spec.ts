@@ -61,4 +61,32 @@ describe("Create User Service", () => {
 
     expect(promise).rejects.toBeInstanceOf(Error);
   });
+
+  it("should be able to list all users", async () => {
+    const users = [
+      {
+        id: "1",
+        name: "Test name one",
+        email: "nameone@test.com",
+        password: "hashed-password",
+      },
+      {
+        id: "2",
+        name: "Test name two",
+        email: "nametwo@test.com",
+        password: "hashed-password",
+      },
+    ];
+
+    jest
+      .spyOn(usersRepository, "getAllUsersRepository")
+      .mockImplementationOnce((): any => {
+        return users;
+      });
+
+    const result = await usersServices.getAllUsersService();
+
+    expect(result).toBeDefined();
+    expect(result).toBe(users);
+  });
 });
