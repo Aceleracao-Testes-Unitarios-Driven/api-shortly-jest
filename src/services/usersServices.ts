@@ -12,10 +12,14 @@ async function createUserService({ name, email, password }: IUser) {
   const existingUsers = await usersRepository.getUserByEmailRepository(email);
 
   if (existingUsers.length > 0) throw new Error("User already exist");
-  
+
   const passwordHash = bcrypt.hashSync(password, 10);
   
-  return await usersRepository.createUserRepository(name, email, passwordHash);
+  await usersRepository.createUserRepository(name, email, passwordHash);
+  
+  const user = await usersRepository.getUserByEmailRepository(email);
+  
+  return user;
 }
 
 async function getByIdUserService(user: IUser) {
